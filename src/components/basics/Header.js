@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { Button, Grid } from '@material-ui/core';
 import { logOut } from '../../store/actions/login'
+import Show from '../../helpers/Show';
 
 const appTheme = createTheme({
     palette: {
@@ -31,6 +32,9 @@ const appTheme = createTheme({
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
+    },
+    logout: {
+        float: 'right'
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -118,9 +122,6 @@ const useStyles = makeStyles((theme) => ({
             top: 100,
             left: '15%'
         },
-        logout: {
-            float: 'left'
-        }
     }
 }));
 
@@ -207,10 +208,11 @@ function Header() {
                             </Tabs>)}
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={6} className={classes.logout}>
-                    <Button onClick={() => dispatch(logOut())}>Logout</Button>
-                </Grid>
+
             </Grid>
+            <Show condition={state.LogIn.loggedIn}>
+                <Button onClick={() => dispatch(logOut())} className={classes.logout}>Logout</Button>
+            </Show>
         </>
     );
 }
