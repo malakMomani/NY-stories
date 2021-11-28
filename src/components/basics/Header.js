@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles, createTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,9 +8,13 @@ import Tab from '@material-ui/core/Tab';
 import Logo from './Logo';
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { logOut } from '../../store/actions/login'
 import Show from '../../helpers/Show';
+import cookie from 'react-cookies';
+
+
+const username = ''
 
 const appTheme = createTheme({
     palette: {
@@ -163,6 +167,9 @@ function Header() {
     }
 
 
+    useEffect(() => {
+        username = cookie.load('name');
+    }, [])
 
     return (
         <>
@@ -170,8 +177,10 @@ function Header() {
                 <AppBar position="static" className={classes.header} >
                     <Toolbar>
                         <Logo />
+                        <Typography varient='h5'>
+                            {username}
+                        </Typography>
                     </Toolbar>
-
                 </AppBar>
 
             </div>
