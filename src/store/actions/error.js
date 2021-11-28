@@ -6,7 +6,6 @@ export const errorAction = payload => {
 }
 export const reset = () => {
     return {
-        type: 'RESET',
-        payload: null
+        type: 'RESET'
     }
 }

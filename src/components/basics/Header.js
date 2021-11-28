@@ -13,9 +13,6 @@ import { logOut } from '../../store/actions/login'
 import Show from '../../helpers/Show';
 import cookie from 'react-cookies';
 
-
-const username = ''
-
 const appTheme = createTheme({
     palette: {
         primary: {
@@ -132,6 +129,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const [username, setUser] = React.useState('');
     const history = useHistory();
 
     const state = useSelector(state => {
@@ -168,7 +166,8 @@ function Header() {
 
 
     useEffect(() => {
-        username = cookie.load('name');
+        let username = cookie.load('name');
+        setUser(username);
     }, [])
 
     return (
@@ -177,12 +176,11 @@ function Header() {
                 <AppBar position="static" className={classes.header} >
                     <Toolbar>
                         <Logo />
-                        <Typography varient='h5'>
-                            {username}
-                        </Typography>
                     </Toolbar>
                 </AppBar>
-
+                <Typography varient='h5'>
+                    {username}
+                </Typography>
             </div>
 
             <Grid container spacing={10}>
@@ -220,7 +218,11 @@ function Header() {
 
             </Grid>
             <Show condition={state.LogIn.loggedIn}>
-                <Button onClick={() => dispatch(logOut())} className={classes.logout}>Logout</Button>
+                <Button onClick={() => {
+                    dispatch(logOut());
+                    setUser('')
+                    history.push('/login');
+                }} className={classes.logout}>Logout</Button>
             </Show>
         </>
     );

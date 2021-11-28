@@ -63,11 +63,11 @@ export function LogIn() {
         }
     });
     const dispatch = useDispatch();
-
+    
     function getData(data) {
         try {
             dispatch(logIn(data));
-            if (state.Error.status)
+            if (!state.Error.status)
                 history.push('/stories')
 
         } catch (error) {

@@ -29,7 +29,7 @@ export const signUp = (user) => {
                 dispatch(signUpAction(data));
                 dispatch(signedUp(true));
                 cookie.save('auth-token', data.token, { expires });
-                cookie.save('name', `${data.first_name} ${data.last_name}`);
+                cookie.save('name', data.email);
             }
         })
             .catch(function (error) {

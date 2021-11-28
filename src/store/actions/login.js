@@ -21,19 +21,20 @@ export const logIn = (user) => {
             },
 
         }).then(async (res) => {
-            let data = { ...user, token: res.data.access_token }
-            //validateToken
-            let isValidUser = validateToken(data.token);
-            if (isValidUser) {
-                dispatch(loginAction(data));
-                dispatch(loggedIn(true));
-                cookie.save('auth-token', data.token, { expires });
-                cookie.save('name', data.email);
+            try {
+                let data = { ...user, token: res.data.access_token }
+                //validateToken
+                let isValidUser = validateToken(data.token);
+                if (isValidUser) {
+                    dispatch(loginAction(data));
+                    dispatch(loggedIn(true));
+                    cookie.save('auth-token', data.token, { expires });
+                    cookie.save('name', data.email);
+                }
+                dispatch(reset())
+            } catch (error) {
+                dispatch(errorAction(error.response));
             }
-            dispatch(reset())
-        }).catch(error => {
-            dispatch(errorAction(error.response));
-
         })
 
     }
